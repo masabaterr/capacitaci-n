@@ -1,15 +1,28 @@
 from fredapi import Fred
 import pandas as pd
 
-# Inicializa el objeto Fred con tu clave API
-fred = Fred(api_key='TU_CLAVE_API')
+# Replace with your own API key from FRED
+api_key = '04008132ab90f5b3d89035751921cadd'
 
-# Ahora puedes usar el objeto fred para buscar series
-gdp_data = fred.search('GDP')
+# Initialize the Fred object with your API key
+fred = Fred(api_key=api_key)
 
-# Convertir los datos obtenidos en un DataFrame de pandas y mostrar las primeras 5 filas con el metodo head.()
-gdp_df = pd.DataFrame(gdp_data, columns=['GDP'])
-print(gdp_df.head())
+# Fetch the GDP data
+gdp_series_id = 'PAYEMS'  # This is the series ID for GDP
+gdp_data = fred.get_series(gdp_series_id)
 
-# Guardar el DataFrame en un archivo CSV
-gdp_df.to_csv('gdp_data.csv', index=False)
+# Convert the data into a pandas DataFrame
+gdp_df = pd.DataFrame(gdp_data, columns=['PAYEMS'])
+
+# Filter the DataFrame for the year 2023
+gdp_2023_df = gdp_df[gdp_df.index.year == 2023]
+
+# Display the DataFrame
+print(gdp_2023_df)
+
+# Save the DataFrame to a CSV file
+gdp_2023_df.to_csv('gdp_2023_data.csv', index=True)
+
+
+
+
